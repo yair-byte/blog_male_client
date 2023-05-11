@@ -31,7 +31,7 @@ function Login(props) {
   };
 
   return (
-    <div className="container">
+    <div className="container d-flex">
       <form className="form" onSubmit={handleSubmit} >
         <p>Login</p>
         <div className="group">
