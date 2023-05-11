@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route , Navigate } from 'react-router-dom';
+import Blog from './Components/Blog.jsx';
+import Login from './Components/Login.jsx';
 
 function App() {
+
+  const [adminLoggedIn, setAdminLoggedIn] = useState(false);
+
+  const [token, setToken] = useState("");
+
+  const handleLogin = (tokenArg) => {
+    setToken(tokenArg);
+    setAdminLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setToken("");
+    setAdminLoggedIn(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+          <Route path="/" element={ <Blog isAdmin={adminLoggedIn} token={token} handleLogout={handleLogout} />} />
+          <Route path="/login" element={ <Login onLogin={handleLogin} />} />
+          <Route path="*" element={ <Navigate to="/" />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
